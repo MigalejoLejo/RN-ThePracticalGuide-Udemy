@@ -5,7 +5,7 @@ import { Button, ButtonText, Divider, GluestackUIProvider, Input, InputField, Pr
 import { StatusBar } from 'expo-status-bar';
 import { uuid } from 'expo-modules-core';
 import { DragItem } from '@react-types/shared';
-import { FlatList, SectionList } from 'react-native';
+import { FlatList, Platform, SectionList } from 'react-native';
 
 export default function App() {
 
@@ -17,6 +17,7 @@ export default function App() {
 
   const [input, setInput] = useState('');
   const [items, setItems] = useState<Item[] | undefined>([]);
+  const myBlue = "#327bc0ff";
 
   const handleInput = (input) => {
     setInput(input);
@@ -37,7 +38,6 @@ export default function App() {
     setInput('');
   }
 
-
   const handleItemPress = (key: string) => {
     if (!items) return;
     const updatedItems = items.map(item => {
@@ -49,8 +49,6 @@ export default function App() {
     setItems(updatedItems);
   }
 
-  const myBlue = "#327bc0ff";
-
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaView flex={1}>
@@ -59,7 +57,7 @@ export default function App() {
 
         <View flex={1} flexDirection='column' >
 
-          <View flexDirection='row' justifyContent='center' alignItems='center' mt={40} mb={10} gap={5} mx={20}>
+          <View flexDirection='row' justifyContent='center' alignItems='center' mt={Platform.OS === 'ios' ? 40 : 80} mb={10} gap={5} mx={20}>
             <Input w={'70%'} size="md" variant="outline" borderBottomColor={myBlue} borderBottomWidth={2} >
               <InputField placeholder="Enter Text here..." onChangeText={handleInput} value={input} />
             </Input>
@@ -70,25 +68,11 @@ export default function App() {
 
           <Divider w={'100%'} height={2} bg={myBlue} my={10} />
 
-
-          {/* {items.length > 0 && items.sort((a, b)=>(Number(a.isDone) - Number(b.isDone))) && (
-            <FlatList<Item>
-              data={items}
-              keyExtractor={(item: Item) => item.key}
-              renderItem={({ item }) => (
-                <Pressable onPress={() => handleItemPress(item.key)}>
-                  <View mx={20} my={5}>
-                    <Text fontSize={20} color={item.isDone ? "$warmGray400" : "$black"}>{(!item.isDone ? '[   ]  ' : '✅   ') + item.value}</Text>
-                  </View>
-                </Pressable>
-              )}
-            />
-          )
-          } */}
-
-
           <SectionList<Item>
-            sections={[{ title: 'My Tasks', data: items.filter(item => !item.isDone) }, { title: items.length === 0 ? '' : 'Done', data: items.filter(item => item.isDone) }]}
+            sections={[
+              { title: 'My Tasks', data: items.filter(item => !item.isDone) },
+              { title: items.length === 0 ? '' : 'Done', data: items.filter(item => item.isDone) }
+            ]}
             keyExtractor={(item: Item) => item.key}
             renderItem={({ item }) => (
               <Pressable onPress={() => handleItemPress(item.key)}>
@@ -99,7 +83,6 @@ export default function App() {
             )}
             renderSectionHeader={({ section: { title } }) => (
               <Text fontSize={30} mx={20} mt={20} mb={10} bold color={myBlue}>{title}</Text>
-
             )}
             renderSectionFooter={({ section }) =>
               // only render footer if the whole list has items
