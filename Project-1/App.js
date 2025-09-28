@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { config } from '@gluestack-ui/config';
 import { GluestackUIProvider, Text, View } from '@gluestack-ui/themed';
 
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
+
+  const [input, setInput] = useState('');
+  const [items, setItems] = useState([]);
+
 
   return (
     <GluestackUIProvider config={config}>
