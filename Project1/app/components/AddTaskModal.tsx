@@ -81,7 +81,17 @@ const AddTaskModal = ({ isOpen, setIsOpen, input, setInput, action }) => {
                     }}
                 >
                     <Input mt={15}>
-                        <InputField placeholder="Enter Task..." value={input} onChangeText={setInput} ref={inputRef} />
+                        <InputField
+                            ref={inputRef}
+                            placeholder="Enter Task..."
+                            value={input}
+                            onChangeText={setInput}
+                            blurOnSubmit={false}
+                            onSubmitEditing={() => {
+                                onAddTask();
+                                inputRef.current?.blur(); // hides keyboard
+                            }} ﬂ
+                        />
                     </Input>
 
                     <HStack gap={10} justifyContent="center" alignItems="center" mt={25} mb={10}>
