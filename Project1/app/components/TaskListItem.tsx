@@ -51,7 +51,7 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
     );
     const iconStyle = useAnimatedStyle(() => ({
         opacity: iconOpacity.value,
-        transform: [{ scale: interpolate(position.value, [0, -120], [0.8, 1.2], 'clamp') }]
+        transform: [{ scale: interpolate(position.value, [0, -120], [1, 0.9], 'clamp') }]
     }));
 
     const styles = StyleSheet.create({

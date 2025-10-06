@@ -1,13 +1,5 @@
-import { FlatList, SectionList } from "react-native"
-import { HStack, Pressable, Text, View } from '@gluestack-ui/themed';
+import { FlatList } from "react-native"
 import { TaskItem } from "../models/TaskItem";
-import { useEffect, useState } from "react";
-import { COLORS } from "../constants/Colors";
-import { LayoutAnimation, Platform, UIManager } from "react-native";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import TaskListItem from "./TaskListItem";
 
 type Props = {
@@ -16,16 +8,9 @@ type Props = {
 }
 const TaskList = ({ taskItems, setTaskItems }: Props) => {
 
-    if (
-        Platform.OS === "android" &&
-        UIManager.setLayoutAnimationEnabledExperimental
-    ) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
 
     const handleTaskItemPress = (key: string) => {
         if (!taskItems) return;
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
         const updatedTaskItems: TaskItem[] = taskItems.map((item: TaskItem) => {
             if (item.key === key) {
@@ -38,7 +23,6 @@ const TaskList = ({ taskItems, setTaskItems }: Props) => {
     }
     const handleDeleteTask = (key: string) => {
         if (!taskItems) return;
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         const updatedTaskItems = taskItems.filter((item) => item.key !== key);
         setTaskItems(updatedTaskItems);
     };

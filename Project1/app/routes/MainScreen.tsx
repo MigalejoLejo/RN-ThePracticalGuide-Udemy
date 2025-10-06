@@ -10,7 +10,6 @@ import TaskList from '@/components/TaskList';
 import { COLORS } from '@/constants/Colors';
 import AddTaskButton from '@/components/AddTaskButton';
 import { loadTasks, saveTasks } from '@/services/TasksStorage';
-import { PanGesture } from 'react-native-gesture-handler/lib/typescript/handlers/gestures/panGesture';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function MainScreen() {
@@ -42,7 +41,7 @@ export default function MainScreen() {
 
 
     return (
-        <GestureHandlerRootView >
+        <GestureHandlerRootView style={{ flex: 1 }}>
             <GluestackUIProvider config={config}>
                 <SafeAreaView edges={['top']} style={{ flex: 1 }}  >
                     <StatusBar style="auto" />
@@ -67,4 +66,3 @@ export default function MainScreen() {
         </GestureHandlerRootView>
     );
 }
-
