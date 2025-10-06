@@ -3,8 +3,7 @@ import { Pressable, Text, View } from '@gluestack-ui/themed';
 import { COLORS } from "../constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, interpolate, useDerivedValue } from "react-native-reanimated";
-import { scheduleOnRN } from 'react-native-worklets';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, interpolate, useDerivedValue, Layout, FadeIn, FadeOut, runOnJS } from "react-native-reanimated";
 
 const TaskListItem = ({ item, onPress, onDelete }) => {
 
@@ -27,8 +26,7 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
                 position.value = withTiming(-300, { duration: 100 }, (finished) => {
                     if (finished) {
                         try {
-                            scheduleOnRN(onDelete, item.key);
-
+                            runOnJS(onDelete)(item.key);
                         } catch (err) {
                             console.warn('could not delete item:', item.key, '- Error: ', err)
                         }
@@ -68,8 +66,13 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
     })
 
     return (
-        <View style={{ position: 'relative', overflow: 'hidden' }}>
-            {/* 🔴 Background delete layer */}
+        <Animated.View
+            layout={Layout.springify().mass(0.4).damping(18).stiffness(180)}
+            entering={FadeIn.duration(180)}
+            exiting={FadeOut.duration(180)}
+            style={{ position: 'relative', overflow: 'hidden' }}
+        >
+                        {/* 🔴 Background delete layer */}
             <Animated.View style={[styles.backgroundBaseStyle, iconStyle]}>
                 <Pressable onPress={() => onDelete(item.key)}>
                     <Ionicons name="trash-outline" size={26} color={COLORS.accents.red} />
@@ -105,7 +108,7 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
                     </Pressable>
                 </Animated.View>
             </GestureDetector>
-        </View >
+        </Animated.View >
     )
 }
 
