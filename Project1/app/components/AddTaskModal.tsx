@@ -90,7 +90,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, input, setInput, action }) => {
                             onSubmitEditing={() => {
                                 onAddTask();
                                 inputRef.current?.blur(); // hides keyboard
-                            }} ﬂ
+                            }}
                         />
                     </Input>
 
