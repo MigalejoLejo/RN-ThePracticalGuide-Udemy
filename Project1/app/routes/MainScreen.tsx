@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { config } from '@gluestack-ui/config';
-import { GluestackUIProvider, Text, View } from '@gluestack-ui/themed';
+import { GluestackUIProvider, Text, View, VStack } from '@gluestack-ui/themed';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { uuid } from 'expo-modules-core';
@@ -47,7 +47,7 @@ export default function MainScreen() {
                 <SafeAreaView edges={['top']} style={{ flex: 1 }}  >
                     <StatusBar style="auto" />
 
-                    <View flex={1} bg={COLORS.bg.lightC}>
+                    <VStack flex={1} bg={COLORS.bg.lightC}>
                         <View height={100} justifyContent='flex-end' alignItems='center' bg={COLORS.bg.lightA} borderBottomWidth={1} borderBottomColor={COLORS.accents.blueLight} pb={5}>
                             <Text fontSize={25} bold color={COLORS.accents.blueDark}>My Tasks</Text>
                         </View>
@@ -58,7 +58,7 @@ export default function MainScreen() {
                             <AddTaskButton action={(val: string) => handleAddTaskItem(val)} />
                         </View>
 
-                    </View>
+                    </VStack>
 
                 </SafeAreaView>
                 <SafeAreaView edges={['bottom']} style={{ backgroundColor: COLORS.bg.lightC }} ></SafeAreaView>

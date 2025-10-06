@@ -1,11 +1,14 @@
 import { FlatList, SectionList } from "react-native"
 import { HStack, Pressable, Text, View } from '@gluestack-ui/themed';
 import { TaskItem } from "../models/TaskItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS } from "../constants/Colors";
 import { LayoutAnimation, Platform, UIManager } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
+import TaskListItem from "./TaskListItem";
 
 type Props = {
     taskItems: TaskItem[];
@@ -40,8 +43,6 @@ const TaskList = ({ taskItems, setTaskItems }: Props) => {
         setTaskItems(updatedTaskItems);
     };
 
-
-
     return (
         <>
             {taskItems !== undefined ?
@@ -53,31 +54,9 @@ const TaskList = ({ taskItems, setTaskItems }: Props) => {
                     keyExtractor={(item: TaskItem) => item.key}
                     renderItem={({ item }) => (
 
-                        <HStack bg={COLORS.bg.lightA}
-                            my={4} py={5} mx={20}
-                            borderRadius={10}
-                            style={{
-                                shadowColor: '#585858ff',
-                                shadowOffset: {
-                                    width: 1, height: 1
-                                },
-                                shadowOpacity: 0.2,
-                                shadowRadius: 2
-                            }}
-                        >
-                            <Pressable onPress={() => handleTaskItemPress(item.key)}>
-                                <HStack mx={10} my={5} gap={12}>
-                                    <Ionicons name={item.isDone ? 'checkmark' : 'square-outline'} size={25} color={COLORS.accents.blueDark} />
-                                    <Text
-                                        fontSize={20}
-                                        color={item.isDone ? "$warmGray400" : "$black"}
-                                        strikeThrough={item.isDone ? true : false}
-                                    >
-                                        {item.value}
-                                    </Text>
-                                </HStack>
-                            </Pressable>
-                        </HStack>
+
+                        <TaskListItem item={item} onPress={handleTaskItemPress} onDelete={handleDeleteTask} />
+
                     )}
                 />
                 : null
