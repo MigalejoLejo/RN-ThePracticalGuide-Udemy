@@ -11,6 +11,7 @@ import { COLORS } from '@/constants/Colors';
 import AddTaskButton from '@/components/AddTaskButton';
 import { loadTasks, saveTasks } from '@/services/TasksStorage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Platform } from 'react-native';
 
 export default function MainScreen() {
 
@@ -41,26 +42,29 @@ export default function MainScreen() {
 
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView >
+
             <GluestackUIProvider config={config}>
-                <SafeAreaView edges={['top']} style={{ flex: 1 }}  >
-                    <StatusBar style="auto" />
 
-                    <VStack flex={1} bg={COLORS.bg.lightC}>
-                        <View height={100} justifyContent='flex-end' alignItems='center' bg={COLORS.bg.lightA} borderBottomWidth={1} borderBottomColor={COLORS.accents.blueLight} pb={5}>
-                            <Text fontSize={25} bold color={COLORS.accents.blueDark}>My Tasks</Text>
-                        </View>
+                {Platform.OS !== 'web' && <SafeAreaView edges={['top']} style={{ backgroundColor: COLORS.bg.lightA }} />}
+                <StatusBar style="auto" />
 
-                        <TaskList taskItems={taskItems} setTaskItems={setTaskItems} />
+                <VStack flex={1} bg={COLORS.bg.lightC}>
+                    <View height={Platform.OS !== 'web' ? 100 : 50} justifyContent='flex-end' alignItems='center' bg={COLORS.bg.lightA} borderBottomWidth={1} borderBottomColor={COLORS.accents.blueDark} pb={10}>
+                        <Text fontSize={25} bold color={COLORS.accents.blueDark}>My Tasks</Text>
+                    </View>
 
-                        <View position='absolute' bottom={0} right={0} m={30} >
-                            <AddTaskButton action={(val: string) => handleAddTaskItem(val)} />
-                        </View>
+                   
+                            <TaskList taskItems={taskItems} setTaskItems={setTaskItems} />
+               
 
-                    </VStack>
+                    <View position='absolute' bottom={0} right={0} m={30} >
+                        <AddTaskButton action={(val: string) => handleAddTaskItem(val)} />
+                    </View>
 
-                </SafeAreaView>
-                <SafeAreaView edges={['bottom']} style={{ backgroundColor: COLORS.bg.lightC }} ></SafeAreaView>
+                </VStack>
+
+                {Platform.OS !== 'web' && <SafeAreaView edges={['bottom']} style={{ backgroundColor: COLORS.bg.lightA }} />}
 
             </GluestackUIProvider>
         </GestureHandlerRootView>

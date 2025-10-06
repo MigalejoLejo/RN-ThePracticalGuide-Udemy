@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native"
-import { Pressable, Text, View } from '@gluestack-ui/themed';
+import { Platform, StyleSheet } from "react-native"
+import { HStack, Pressable, Text, View } from '@gluestack-ui/themed';
 import { COLORS } from "../constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -9,6 +9,8 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
 
     const position = useSharedValue(0);
     const panGesture = Gesture.Pan()
+        .activeOffsetX([-10, 10]) // 👈 require at least 10px horizontal movement before activating
+        .failOffsetY([-10, 10])   // 👈 fail (give up) if moving vertically >10px — lets FlatList scroll
         .onUpdate((e) => {
             position.value = e.translationX;
         })
@@ -71,17 +73,20 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
             entering={FadeIn.duration(180)}
             exiting={FadeOut.duration(180)}
             style={{ position: 'relative', overflow: 'hidden' }}
+            pointerEvents="box-none" // 👈 allows FlatList scroll/touch to pass through
+
         >
-                        {/* 🔴 Background delete layer */}
-            <Animated.View style={[styles.backgroundBaseStyle, iconStyle]}>
+            {/* 🔴 Background delete layer */}
+            <Animated.View style={[styles.backgroundBaseStyle, iconStyle]} >
                 <Pressable onPress={() => onDelete(item.key)}>
                     <Ionicons name="trash-outline" size={26} color={COLORS.accents.red} />
                 </Pressable>
             </Animated.View>
 
             <GestureDetector gesture={panGesture}>
-                <Animated.View style={[animatedStyle]}>
-                    <Pressable onPress={() => onPress(item.key)} style={[{
+
+                <Animated.View style={[animatedStyle, { alignSelf: 'center', width: Platform.OS !== 'web' ? '100%' : 600 }]}>
+                    <HStack style={{
                         flexDirection: 'row',
                         marginHorizontal: 10,
                         marginVertical: 4,
@@ -95,8 +100,12 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
                         },
                         shadowOpacity: 0.2,
                         shadowRadius: 2
-                    }]}>
-                        <Ionicons name={item.isDone ? 'checkmark' : 'square-outline'} size={25} color={COLORS.accents.blueDark} />
+                    }}>
+
+                        <Pressable onPress={() => onPress(item.key)}>
+                            <Ionicons name={item.isDone ? 'checkmark' : 'square-outline'} size={25} color={COLORS.accents.blueDark} />
+                        </Pressable>
+
                         <Text
                             w={'90%'}
                             fontSize={20}
@@ -105,8 +114,9 @@ const TaskListItem = ({ item, onPress, onDelete }) => {
                         >
                             {item.value}
                         </Text>
-                    </Pressable>
+                    </HStack>
                 </Animated.View>
+
             </GestureDetector>
         </Animated.View >
     )

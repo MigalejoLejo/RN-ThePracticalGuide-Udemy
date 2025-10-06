@@ -1,6 +1,7 @@
-import { FlatList } from "react-native"
+import { FlatList, Platform } from "react-native"
 import { TaskItem } from "../models/TaskItem";
 import TaskListItem from "./TaskListItem";
+import { View } from "@gluestack-ui/themed";
 
 type Props = {
     taskItems: TaskItem[];
@@ -31,15 +32,17 @@ const TaskList = ({ taskItems, setTaskItems }: Props) => {
         <>
             {taskItems !== undefined ?
                 <FlatList<TaskItem>
-                    style={{ paddingVertical: 20 }}
+                    style={{ paddingVertical: 20, width:'100%'}}
+                  
                     data={taskItems.sort((a, b) => {
                         return a.isDone === b.isDone ? 0 : a.isDone ? 1 : -1
                     })}
                     keyExtractor={(item: TaskItem) => item.key}
                     renderItem={({ item }) => (
 
+                       
 
-                        <TaskListItem item={item} onPress={handleTaskItemPress} onDelete={handleDeleteTask} />
+                            <TaskListItem item={item} onPress={handleTaskItemPress} onDelete={handleDeleteTask} />
 
                     )}
                 />

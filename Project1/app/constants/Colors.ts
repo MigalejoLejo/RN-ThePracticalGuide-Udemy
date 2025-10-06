@@ -4,7 +4,7 @@ export const COLORS = {
     bg: {
         lightA: 'hsla(0, 0%, 100%, 1.00)',
         lightB: 'hsla(0, 0%, 98%, 1.00)',
-        lightC: 'hsla(0, 0%, 96%, 1.00)',
+        lightC: 'hsla(0, 0%, 90%, 1.00)',
     },
 
     accents: {
