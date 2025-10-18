@@ -56,7 +56,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, input, setInput, action }) => {
 
     return (
         
-            <Modal isOpen={true} style={{ width: '100%' }} alignSelf="center">
+            <Modal isOpen={true} style={{ width: '100%' }} alignSelf="center" >
                 <Animated.View style={{
                     opacity,
                     height: '100%',
