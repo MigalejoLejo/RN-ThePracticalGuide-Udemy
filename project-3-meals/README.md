@@ -48,3 +48,110 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+
+TODO:
+src/
+│
+├── app/                        # ✅ Expo Router routes live here
+│   ├── _layout.tsx             # Root layout (themes, providers, etc.)
+│   ├── index.tsx               # App entry screen
+│   │
+│   ├── (auth)/                 # Auth flow
+│   │   ├── _layout.tsx
+│   │   ├── login.tsx
+│   │   ├── register.tsx
+│   │   └── forgot-password.tsx
+│   │
+│   ├── (main)/                 # Main user flow (after login)
+│   │   ├── _layout.tsx
+│   │   ├── (tabs)/             # Bottom tabs navigator group
+│   │   │   ├── _layout.tsx
+│   │   │   ├── home.tsx
+│   │   │   ├── explore.tsx
+│   │   │   ├── favorites.tsx
+│   │   │   └── profile.tsx
+│   │   ├── settings.tsx
+│   │   ├── notifications.tsx
+│   │   └── about.tsx
+│   │
+│   └── (modals)/               # Modal stack (optional)
+│       ├── _layout.tsx
+│       └── feedback.tsx
+│
+├── components/                 # 🧩 Reusable UI components
+│   ├── common/                 # Basic shared elements (Button, Card, etc.)
+│   ├── layout/                 # Structural components (Header, Footer, etc.)
+│   ├── forms/                  # Inputs, validation UI, etc.
+│   └── navigation/             # Custom navigators, tab bars
+│
+├── hooks/                      # 🪝 Reusable custom hooks
+│   ├── app/                    # App-level logic (auth, theme, etc.)
+│   └── domain/                 # Domain-specific hooks
+│
+├── context/                    # 🌍 React context providers
+│   ├── AuthContext.tsx
+│   ├── ThemeContext.tsx
+│   └── ...
+│
+├── features/                   # 🧠 Domain logic grouped by feature
+│   ├── meals/
+│   │   ├── api/
+│   │   │   └── mealsApi.ts
+│   │   ├── components/
+│   │   │   ├── MealCard.tsx
+│   │   │   └── MealList.tsx
+│   │   ├── hooks/
+│   │   │   └── useMeals.ts
+│   │   └── model/
+│   │       └── mealTypes.ts
+│   │
+│   └── users/
+│       ├── api/
+│       ├── hooks/
+│       └── model/
+│
+├── assets/                     # 🖼️ Images, icons, fonts, lottie files, etc.
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+├── lib/                        # 🧰 Third-party setup and configuration
+│   ├── axios/
+│   │   └── client.ts
+│   ├── i18n/
+│   │   └── index.ts
+│   ├── analytics/
+│   │   └── index.ts
+│   └── navigation/
+│       └── linking.ts          # Deep linking setup
+│
+├── store/                      # 🪙 State management (Redux, Zustand, Jotai, etc.)
+│   ├── index.ts
+│   ├── slices/
+│   │   ├── authSlice.ts
+│   │   └── userSlice.ts
+│   └── persistConfig.ts
+│
+├── styles/                     # 🎨 Global styles, themes, constants
+│   ├── colors.ts
+│   ├── spacing.ts
+│   ├── typography.ts
+│   └── theme.ts
+│
+├── utils/                      # ⚙️ Utility and helper functions
+│   ├── formatters.ts
+│   ├── validators.ts
+│   ├── date.ts
+│   └── logger.ts
+│
+├── types/                      # 📘 Global TypeScript definitions
+│   ├── env.d.ts
+│   ├── navigation.d.ts
+│   └── index.d.ts
+│
+└── config/                     # ⚙️ Environment and app configuration
+    ├── env.ts
+    ├── constants.ts
+    └── firebaseConfig.ts
