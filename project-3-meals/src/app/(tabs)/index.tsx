@@ -5,9 +5,17 @@ import { HelloWave } from '@/presentation/components/hello-wave';
 import ParallaxScrollView from '@/presentation/components/parallax-scroll-view';
 import { ThemedText } from '@/presentation/components/themed-text';
 import { ThemedView } from '@/presentation/components/themed-view';
-import { Link } from 'expo-router';
+
+import { auth } from '@/config/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+
+
 
 export default function HomeScreen() {
+  const [user, loading, error] = useAuthState(auth);
+
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -37,7 +45,7 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
+        {/* <Link href="/modal">
           <Link.Trigger>
             <ThemedText type="subtitle">Step 2: Explore</ThemedText>
           </Link.Trigger>
@@ -58,7 +66,7 @@ export default function HomeScreen() {
               />
             </Link.Menu>
           </Link.Menu>
-        </Link>
+        </Link> */}
 
         <ThemedText>
           {`Tap the Explore tab to learn more about what's included in this starter app.`}
